@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-import socket
+import os
 
 app = Flask(__name__)
 
@@ -30,8 +30,6 @@ def check_card(card):
         return jsonify({"status": "Card_declined (LookUP_error)! ❌"})
 
 if __name__ == '__main__':
-    ip_address = socket.gethostbyname(socket.gethostname())
-    port = 5000  # يمكنك تغييره إذا أردت
-
-    print(f"🔹 خادم يعمل على: http://{ip_address}:{port}/<CARD>")
-    app.run(host='0.0.0.0', port=port, debug=True)
+    # استخدم العنوان والمنفذ من البيئة
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
